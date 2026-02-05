@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine 💘</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #ff5f8f, #ff9a9e);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 28px 22px;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      z-index: 2;
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.05rem;
+      margin-bottom: 22px;
+      line-height: 1.4;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+
+    .btn {
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+
+    .yes {
+      background: #ff2d55;
+      color: white;
+    }
+
+    .no {
+      background: white;
+      color: #ff2d55;
+      position: relative;
+    }
+
+    .message {
+      display: none;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(1); opacity: 0.9; }
+      to { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: red;
+      animation: confettiFall 1.5s ease-out forwards;
+      z-index: 3;
+    }
+
+    @keyframes confettiFall {
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(120vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="card">
+    <!-- OPTIONAL PHOTO -->
+    <!-- Replace src with your image URL or remove the img tag -->
+    <img src="https://your-photo-here.jpg" alt="Us 💕" />
+
+    <h1>Will you be my Valentine, <span id="theirName">Alex</span>? 💘</h1>
+
+    <p>
+      From <strong id="yourName">Me</strong> to you —  
+      I think we’d be pretty cute 💖
+      
+    </p>
+
+    <div class="buttons">
+      <button class="btn yes" onclick="sayYes()">Yes 💕</button>
+      <button class="btn no" id="noBtn">No 😈</button>
+    </div>
+
+    <div class="message" id="loveMessage">
+      🎉 You’re officially my Valentine 💖  
+      I can’t wait for our date 😘
+    </div>
+  </div>
+
+  <script>
+    /* PERSONALIZE HERE */
+    const yourName = "Nkabi";
+    const theirName = "Nkabikazi👑";
+    const yesRedirectLink = "https://your-link-here.com";
+
+    document.getElementById("yourName").textContent = yourName;
+    document.getElementById("theirName").textContent = theirName;
+
+    /* Floating hearts */
+    const hearts = ["💖", "💘", "💕", "💗", "❤️"];
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+
+    /* No button runs away */
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    /* Yes click */
+    function sayYes() {
+      launchConfetti();
+      document.getElementById("loveMessage").style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = yesRedirectLink;
+      }, 2000);
+    }
+
+    /* Confetti */
+    function launchConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+          `hsl(${Math.random() * 360}, 100%, 70%)`;
+        confetti.style.animationDuration = 1 + Math.random() * 1 + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+  </script>
+
+</body>
+</html>
